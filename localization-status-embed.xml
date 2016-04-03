@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="EPGP Localization Status"></ModulePrefs>
+  <Content type="html">
+    <![CDATA[
+      <div id="content_div" style="font-size:9pt"></div>
+      <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
+      <style>
+        .graphical-status-bar-segment { display: inline-block; }
+        .graphical-status-bar-segment-inner { display: inline-block; text-indent: -5000px; width: 100%; }
+        .localization-language-status-bar-segment-translated .graphical-status-bar-segment-inner { background: #007F00; }
+        .localization-language-status-bar-segment-review .graphical-status-bar-segment-inner { background: #7F7F00; }
+        .localization-language-status-bar-segment-untranslated .graphical-status-bar-segment-inner { background: #7F0000; }
+      </style>
+
+      <script type="text/javascript">
+        var url = 'http://wow.curseforge.com/projects/epgp-dkp-reloaded/localization/';
+        var debug = 1;
+        var debug_html = "";
+
+        // The following function is not mine:
+        // (c) 2007 Steven Levithan <stevenlevithan.com>
+        // MIT License
+
+        function matchRecursiveRegExp (str, left, right, flags) {
+          var f = flags || "",
+              g = f.indexOf("g") > -1,
+              x = new RegExp(left + "|" + right, "g" + f),
+              l = new RegExp(left, f.replace(/g/g, "")),
+              a = [],
+              t, s, m;
+
+          do {
+            t = 0;
+            while (m = x.exec(str)) {
+              if (l.test(m[0])) {
+                if (!t++) s = x.lastIndex;
+              } else if (t) {
+                if (!--t) {
+                  a.push(str.slice(s, m.index));
+                  if (!g) return a;
+                }
+              }
+            }
+	  } while (t && (x.lastIndex = s));
+
+          return a;
+        }
+
+        function print(msg) {
+          if (debug) {
+            debug_html += msg;
+            _gel('debug_div').innerHTML = debug_html;
+          }
+        }
+
+        function response(text) {
+          if (!text) {
+            _gel('content_div').innerHTML = 'Unable to contact: ' + url;
+            return;
+          }
+          var table = matchRecursiveRegExp(text, '<table class="listing">', '</table>', 'i');
+          table = new String(table).replace(/href="/g, 'target="_blank" href="http://wow.curseforge.com');
+          _gel('content_div').innerHTML = '<table>' + table + '</table>';
+        }
+
+        _IG_RegisterOnloadHandler(function() { _IG_FetchContent(url, response); });
+      </script>
+      ]]>
+  </Content>
+</Module>

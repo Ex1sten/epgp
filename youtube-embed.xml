@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs
+      title="Youtube Video"
+      width="485"
+      height="390"
+      border="0" />
+  <UserPref name="video_id" display_name="VideoId" required="true" />
+  <Content type="html">
+    <![CDATA[
+      <object width="485" height="390">
+        <param name="movie" value="http://www.youtube.com/v/__UP_video_id__&ap=%2526fmt%3D18"></param>
+        <param name="allowFullScreen" value="true"></param>
+        <param name="allowscriptaccess" value="always"></param>
+        <embed src="http://www.youtube.com/v/__UP_video_id__&ap=%2526fmt%3D18" type="application/x-shockwave-flash" showsearch="0" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed>
+      </object>
+      ]]>
+  </Content>
+</Module>
+

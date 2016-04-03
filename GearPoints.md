@@ -1,0 +1,1 @@
+This page has moved [here](http://www.epgpweb.com/help/gearpoints).
